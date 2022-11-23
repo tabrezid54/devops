@@ -1,0 +1,10 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: my-pod
+  labels:
+    app: webcolor
+spec:
+  containers:
+    - name: webcolor
+      image: tabrezid54/webcolor2
