@@ -8,5 +8,3 @@ spec:
   containers:
     - name: webcolor
       image: tabrezid54/webcolor2
-      
-##this is shah tabrez
