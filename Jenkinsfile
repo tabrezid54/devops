@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Delete all running docker container') {
             steps {
-                sh 'docker rm -f $(docker ps -aq'
+                sh 'docker rm -f $(docker ps -aq)'
             }
         }
         stage('Create docker container') {
