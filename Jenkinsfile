@@ -9,6 +9,6 @@ node("my-node"){
         sh 'docker rm -f $(docker ps -aq)'
     }
     stage("Create docker container") {
-        sh 'docker run -d --name $JOB_NAME -p 80:80'
+        sh 'docker run -d --name $JOB_NAME -p 80:80 $JOB_NAME'
     }
 }
