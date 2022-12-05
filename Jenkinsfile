@@ -1,14 +1,14 @@
 node{
-    stage("Pull Source Code from GitHub"){
+    stage("Pull Source Code from GitHub") {
     git branch: 'devops', url: 'https://github.com/tabrezid54/devops.git'
     }
-    stage("list"){
-        sh 'ls -ltr'
+    stage("Create docker image") {
+        sh 'docker build -t $JOB_NAME docker/.'
     }
-    stage("workdir"){
-        sh 'pwd'
+      stage("Delete all docker container") {
+        sh 'docker rm $(docker ps -aq)'
     }
-    stage("user"){
-        sh 'whoami'
+    stage("Create docker container") {
+        sh 'docker run -d --name $JOB_NAME -p 80:80'
     }
 }
