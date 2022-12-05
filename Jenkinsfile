@@ -1,4 +1,4 @@
-node{
+node("my-node"){
     stage("Pull Source Code from GitHub") {
     git branch: 'devops', url: 'https://github.com/tabrezid54/devops.git'
     }
