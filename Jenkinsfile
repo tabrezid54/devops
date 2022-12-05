@@ -6,7 +6,7 @@ node("my-node"){
         sh 'docker build -t $JOB_NAME docker/.'
     }
       stage("Delete all docker container") {
-        sh 'docker rm $(docker ps -aq)'
+        sh 'docker rm -f $(docker ps -aq)'
     }
     stage("Create docker container") {
         sh 'docker run -d --name $JOB_NAME -p 80:80'
