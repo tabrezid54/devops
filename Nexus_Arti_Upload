@@ -1,0 +1,32 @@
+pipeline{
+    agent { node { label 'my-node' } }
+    environment {
+        imageName = "$JOB_NAME"
+        registryCredentials = "nexus"
+        registry = "34.236.190.51:5010/"
+        dockerImage = ''
+    }
+    stages {
+        stage('Pull Source Code from GitHub') {
+            steps {
+                git branch: 'devops', url: 'https://github.com/tabrezid54/devops.git'
+            }
+        }
+    stage('Create docker image') {
+            steps {
+                script {
+                   dockerImage = docker.build("${imageName}" ,"$WORKSPACE/docker")  
+        }
+            }
+        }
+    stage('docker push') {
+            steps {
+                script {
+                     docker.withRegistry( 'http://'+registry, registryCredentials ) {
+                     dockerImage.push('latest')
+                    }
+                }    
+            }         
+        }    
+    }
+}
