@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-app
+spec:
+  selector:
+    matchLabels:
+      app: java-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: java-app
+    spec:
+      containers:
+        - name: java-app
+          image: tabrezid54/java-app:125
+          ports:
+          - containerPort: 8088
+          volumeMounts:
+          - name: db-info
+            mountPath: /usr/local/tomcat/webapps/dptweb-1.0/WEB-INF/classes/application.properties
+            readOnly: true
+      volumes:
+      - name: db-info
+        configMap:
+          name: application-properties
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: application-properties
+data:
+  application.properties: |
+    spring.mvc.view.prefix=/pages/
+    spring.mvc.view.suffix=.jsp
+    spring.datasource.url = jdbc:mysql://mysql.default.svc.cluster.local:3306/UserDB
+    spring.datasource.username = tab
+    spring.datasource.password = Tab123
